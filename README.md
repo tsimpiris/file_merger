@@ -6,9 +6,6 @@ A CLI tool that looks in the input folder for TXT, CSV or DXF files and outputs 
 ### Requirements
 See requirements.txt
 
-### Developer
-Ioannis Tsimpiris
-
 ### Inputs
 + Input folder (Folder Path)
 + Output folder
