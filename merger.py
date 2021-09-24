@@ -3,6 +3,7 @@ import sys
 import glob
 import argparse
 import ezdxf
+import fiona
 import pandas as pd
 from ezdxf.addons import Importer
 
@@ -21,8 +22,8 @@ def inputs():
     parser.add_argument('-i', '--input', dest='input_folder', \
         help='Type input folder path', required=True)
     parser.add_argument('-t', '--type', dest='file_type', \
-        choices=['txt', 'csv', 'dxf'], \
-        help='Type input file type: txt, csv or dxf', required=True)
+        choices=['txt', 'csv', 'dxf', 'shp'], \
+        help='Type input file type: txt, csv, dxf, shp', required=True)
 
     # Optional parameters
     parser.add_argument('-o', '--output', dest='output_folder', \
@@ -91,7 +92,10 @@ def merger(settings_dict):
             csv_merger(settings_dict)
         elif settings_dict['FILE_TYPE'] == 'dxf':
             dxf_merger(settings_dict)
-    except Exception:
+        elif settings_dict['FILE_TYPE'] == 'shp':
+            shapefile_merger(settings_dict)
+    except Exception as e:
+        print(e)
         print(f'Unable to merge {settings_dict["FILE_TYPE"]} files')
 
 
@@ -126,6 +130,18 @@ def dxf_merger(settings_dict):
         importer.finalize()
 
     base_dxf.saveas(settings_dict['OUTPUT_FILE'])
+
+
+def shapefile_merger(settings_dict):
+    shps = settings_dict['INPUT_FILES']
+
+    outputfilename = os.path.basename(settings_dict['OUTPUT_FILE'])
+
+    meta = fiona.open(shps[0]).meta
+    with fiona.open(settings_dict["OUTPUT_FILE"], 'w', **meta) as output:
+        for shp in shps:
+            for features in fiona.open(shp):
+                output.write(features)
 
 
 if __name__ == '__main__':
