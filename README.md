@@ -1,13 +1,13 @@
 # File Merger - v0.0.1
 
 ### Overview
-A CLI tool that looks in the input folder for TXT, CSV, DXF or SHP files and outputs a merged file in the given location
+A basic File Merger (CLI) that merges all the TXT,CSV, DXF or SHP files in the input folder
 
 ### Requirements
 See requirements.txt
 
 ### Inputs
-+ Input folder (Folder Path)
++ Input folder
 + Output folder
 + Input file type [txt, csv, dxf or shp]
 + Output filename (with no extension)
