@@ -1,4 +1,4 @@
-# File Merger - v0.0.1
+# File Merger
 
 ### Overview
 A basic File Merger (CLI) that merges all the TXT,CSV, DXF or SHP files in the input folder
